@@ -3,79 +3,73 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace DataAccess.Concrete
 {
     public class InMemoryCarDal : ICarDal
     {
-        List<Car> _car;
-        public InMemoryCarDal()
-        {
-            _car = new List<Car>()
-            {
-                new Car()
-                {
-                    Id = 1, Brand = "Mercedes", Color = "Black", DailyPrice = 750, ModelYear = 2016,
-                    Description = "Like a brand new."
-                },
-                new Car()
-                {
-                    Id = 2, Brand = "BMW", Color = "Blue", DailyPrice = 650, ModelYear = 2015,
-                    Description = "Awesome for feeling excited."
-                },
-                new Car()
-                {
-                    Id = 3, Brand = "Opel", Color = "Red", DailyPrice = 400, ModelYear = 2016,
-                    Description = "Good for family."
-                },
-                new Car()
-                {
-                    Id = 4, Brand = "Fiat", Color = "Blue", DailyPrice = 300, ModelYear = 2017,
-                    Description = "Good for your budget."
-                },
-                new Car()
-                {
-                    Id = 5, Brand = "Peugeot", Color = "Red", DailyPrice = 350, ModelYear = 2014,
-                    Description = "For youth."
-                },
-                new Car()
-                {
-                    Id = 6, Brand = "Doblo", Color = "White", DailyPrice = 200, ModelYear = 2000,
-                    Description = "If you want to barbecue, just pick it."
-                }
-            };
-        }
+        List<Car> _cars;
+        //public InMemoryCarDal()
+        //{
+        //    _cars = new List<Car>()
+        //    {
+        //        new Car()
+        //        {
+        //            Id = 1, BrandId = "Mercedes", ColorId = "Black", DailyPrice = 750, ModelYear = 2016
+        //        },
+        //        new Car()
+        //        {
+        //            Id = 2, BrandId = "BMW", ColorId = "Blue", DailyPrice = 650, ModelYear = 2015
+        //        },
+        //        new Car()
+        //        {
+        //            Id = 3, BrandId = "Opel", ColorId = "Red", DailyPrice = 400, ModelYear = 2016
+        //        },
+        //        new Car()
+        //        {
+        //            Id = 4, BrandId = "Fiat", ColorId = "Blue", DailyPrice = 300, ModelYear = 2017
+        //        },
+        //        new Car()
+        //        {
+        //            Id = 5, BrandId = "Peugeot", ColorId = "Red", DailyPrice = 350, ModelYear = 2014
+        //        },
+        //        new Car()
+        //        {
+        //            Id = 6, BrandId = "Doblo", ColorId = "White", DailyPrice = 200, ModelYear = 2000
+        //        }
+        //    };
+        //}
 
-        public void Add(Car car)
+        public void Add(Car entity)
         {
-            _car.Add(car);
+            _cars.Add(entity);
         }
 
         public void Delete(Car car)
         {
-            Car carToDelete = _car.SingleOrDefault(c => c.Brand == car.Brand);
-            _car.Remove(carToDelete);
+            Car carToDelete = _cars.SingleOrDefault(c => c.BrandId == car.BrandId);
+            _cars.Remove(carToDelete);
         }
 
-        public List<Car> GetAll()
+        public List<Car> GetAll(Func<Car, bool> filter = null)
         {
-            return _car;
+            return _cars;
         }
 
-        public List<Car> GetById(int brandId, int colorId)
+        public Car Get(Func<Car, bool> filter)
         {
-            return _car.Where(c => c.Brand == c.Brand && c.Color == c.Color).ToList();
+            return _cars.SingleOrDefault(c => c.BrandId == c.BrandId && c.ColorId == c.ColorId);
         }
 
         public void Update(Car car)
         {
-            Car carToUpdate = _car.SingleOrDefault(c => c.Brand == c.Brand);
+            Car carToUpdate = _cars.SingleOrDefault(c => c.BrandId == c.BrandId);
             carToUpdate.Id = car.Id;
-            carToUpdate.Brand = car.Brand;
-            carToUpdate.Color = car.Color;
+            carToUpdate.BrandId = car.BrandId;
+            carToUpdate.ColorId = car.ColorId;
             carToUpdate.DailyPrice = car.DailyPrice;
-            carToUpdate.Description = car.Description;
             carToUpdate.ModelYear = car.ModelYear;
         }
     }
