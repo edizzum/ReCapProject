@@ -2,31 +2,46 @@
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
+using Entities.DTOs;
 using System;
 
 namespace Control
 {
     class Program
     {
+
         static void Main(string[] args)
         {
+            CarTest();
+            //BrandTest();
+            //ColorTest();
+        }
+
+        private static void CarTest()
+        {
             CarManager carManager = new CarManager(new EfCarDal());
-            ColorManager colorManager = new ColorManager(new EfColorDal());
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
-
-            foreach (var xCars in carManager.GetAll())
+            foreach (var xCar in carManager.GetByCarId(3))
             {
-                Console.WriteLine(xCars.BrandId);
+                Console.WriteLine(xCar.DailyPrice);
             }
+        }
 
+        private static void ColorTest()
+        {
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            foreach (var color in colorManager.GetAll())
+            {
+                Console.WriteLine(color.ColorName);
+            }
+        }
 
-            //int sayac = 1;
-            //foreach (var xCar in carManager.GetAll())
-            //{
-
-            //    System.Console.WriteLine(sayac + ". " + xCar.Brand + " -Günlük Fiyat: " + xCar.DailyPrice);
-            //    sayac++;
-            //}
+        private static void BrandTest()
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            foreach (var brand in brandManager.GetAll())
+            {
+                Console.WriteLine(brand.BrandName);
+            }
         }
     }
 }
