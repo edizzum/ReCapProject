@@ -18,9 +18,29 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
+
+        public IResult Add(Car car)
+        {
+            if (car.DailyPrice > 150 && car.ModelYear > 2012)
+            {
+                _carDal.Add(car);
+                return new SuccessResult(Messages.Added);
+            }
+            else
+            {
+                return new ErrorResult(Messages.AddedException);
+            }
+        }
+
+        public IResult Delete(Car car)
+        {
+            _carDal.Delete(car);
+            return new SuccessResult(Messages.Deleted);
+        }
+
         public IDataResult<List<Car>> GetAll()
         {
-            if (DateTime.Now.Hour == 22)
+            if (DateTime.Now.Hour == 23)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
@@ -30,7 +50,7 @@ namespace Business.Concrete
 
         public IDataResult<Car> GetByCarId(int carId)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == carId));
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId));
         }
 
         public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
@@ -38,9 +58,15 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.DailyPrice == p.DailyPrice));
         }
 
-        public IDataResult<List<CarDetailDto>> GetCarDetail()
+        public IDataResult<List<CarDetailsDto>> GetCarDetail()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetail());
+            return new SuccessDataResult<List<CarDetailsDto>>(_carDal.GetCarDetail());
+        }
+
+        public IResult Update(Car car)
+        {
+            _carDal.Update(car);
+            return new SuccessResult(Messages.Updated);
         }
     }
 }

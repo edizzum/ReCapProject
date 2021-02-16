@@ -67,14 +67,14 @@ namespace DataAccess.Concrete
         public void Update(Car car)
         {
             Car carToUpdate = _cars.SingleOrDefault(c => c.BrandId == c.BrandId);
-            carToUpdate.Id = car.Id;
+            carToUpdate.CarId = car.CarId;
             carToUpdate.BrandId = car.BrandId;
             carToUpdate.ColorId = car.ColorId;
             carToUpdate.DailyPrice = car.DailyPrice;
             carToUpdate.ModelYear = car.ModelYear;
         }
 
-        public List<CarDetailDto> GetCarDetail()
+        public List<CarDetailsDto> GetCarDetail()
         {
             throw new NotImplementedException();
         }
