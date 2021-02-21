@@ -13,7 +13,7 @@ namespace Control
 
         static void Main(string[] args)
         {
-            TestCarGetAll();
+            //TestCarGetAll();
             //AddCar();
             //UpdateCar();
             //AddCustomer();
@@ -96,7 +96,7 @@ namespace Control
 
             foreach (var xCar in carManager.GetCarDetail().Data)
             {
-                Console.WriteLine(xCar.BrandName);
+                Console.WriteLine(xCar.CarId + "-  " +"Brand:" + xCar.BrandName +"   " + "Color:" + xCar.ColorName  + "Model:" + xCar.ModelYear + "    " +"DailyPrice:" + xCar.DailyPrice + "TL");
             }
         }
     }
